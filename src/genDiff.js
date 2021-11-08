@@ -3,8 +3,8 @@ import path from 'path';
 import _ from 'lodash';
 
 const getFileData = (filepath) => {
-  const absoluteFilePath = path.isAbsolute(filepath) ? file : path.resolve(process.cwd(), filepath);
-  const fileData = JSON.parse(fs.readFileSync(absoluteFilePath, 'utf-8'));
+  const absolutePath = path.isAbsolute(filepath) ? filepath : path.resolve(process.cwd(), filepath);
+  const fileData = JSON.parse(fs.readFileSync(absolutePath, 'utf-8'));
   return fileData;
 };
 
@@ -32,7 +32,7 @@ const compareObjects = (object1, object2) => {
 
       return acc;
     }, []).join('\n');
-  const result =  `{\n${diff}\n}`;
+  const result = `{\n${diff}\n}`;
   return result;
 };
 
