@@ -9,9 +9,16 @@ const __dirname = path.dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const getExpected = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
-test('Diff', () => {
+test('JSON Diff', () => {
   const file1Path = getFixturePath('file1.json');
   const file2Path = getFixturePath('file2.json');
+  const expectedFile = getExpected('expected.diff.txt');
+  expect(genDiff(file1Path, file2Path)).toEqual(expectedFile);
+});
+
+test('YAML Diff', () => {
+  const file1Path = getFixturePath('file1.yml');
+  const file2Path = getFixturePath('file2.yml');
   const expectedFile = getExpected('expected.diff.txt');
   expect(genDiff(file1Path, file2Path)).toEqual(expectedFile);
 });
