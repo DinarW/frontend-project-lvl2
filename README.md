@@ -8,3 +8,4 @@
 Команда для запуска: `gendiff -h`:
 [![asciicast](https://asciinema.org/a/hohmtxAlYyomyl7yIwevL2djT.svg)](https://asciinema.org/a/hohmtxAlYyomyl7yIwevL2djT)
 [![asciicast](https://asciinema.org/a/hSVQHKyOmK30KHMiH8JFercra.svg)](https://asciinema.org/a/hSVQHKyOmK30KHMiH8JFercra)
+[![asciicast](https://asciinema.org/a/uEyaG04OTS26DvnRrh8uq9Abp.svg)](https://asciinema.org/a/uEyaG04OTS26DvnRrh8uq9Abp)

@@ -1,38 +1,36 @@
 import _ from 'lodash';
 import getFileData from './parsers.js';
+import stylish from './stylish.js';
 
-const compareObjects = (object1, object2) => {
-  const keys = _.sortedUniq([...Object.keys(object1), ...Object.keys(object2)].sort());
-  const diff = keys
-    .reduce((acc, key) => {
-      if (_.has(object1, key) && !_.has(object2, key)) {
-        acc.push(` - ${key}: ${object1[key]}`);
-        return acc;
-      }
+const buildTree = (data1, data2) => {
+  const keys = _.sortedUniq(Object.keys({ ...data1, ...data2 }).sort());
+  return keys.map((key) => {
+    const value1 = data1[key];
+    const value2 = data2[key];
 
-      if (!_.has(object1, key) && _.has(object2, key)) {
-        acc.push(` + ${key}: ${object2[key]}`);
-        return acc;
-      }
+    if (!_.has(data1, key)) {
+      return { type: '+', key, val: value2 };
+    }
+    if (!_.has(data2, key)) {
+      return { type: '-', key, val: value1 };
+    }
+    if (_.isObject(value1) && _.isObject(value2)) {
+      return { type: 'recursion', key, children: buildTree(value1, value2) };
+    }
+    if (!_.isEqual(value1, value2)) {
+      return {
+        type: '-+', key, val1: value1, val2: value2,
+      };
+    }
 
-      if (object1[key] === object2[key]) {
-        acc.push(`   ${key}: ${object1[key]}`);
-        return acc;
-      }
-
-      acc.push(` - ${key}: ${object1[key]}`);
-      acc.push(` + ${key}: ${object2[key]}`);
-
-      return acc;
-    }, []).join('\n');
-  const result = `{\n${diff}\n}`;
-  return result;
+    return { type: ' ', key, val: value1 };
+  });
 };
 
 const genDiff = (filepath1, filepath2) => {
   const object1 = getFileData(filepath1);
   const object2 = getFileData(filepath2);
-  return compareObjects(object1, object2);
+  return stylish(buildTree(object1, object2));
 };
 
 export default genDiff;
