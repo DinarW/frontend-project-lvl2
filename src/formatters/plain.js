@@ -6,6 +6,7 @@ const stringify = (obj) => {
   } if (obj === null) {
     return null;
   }
+
   return obj;
 };
 
@@ -27,6 +28,7 @@ const plain = (innerTree) => {
           throw new Error(`Такого типа не существует ${node.type}`);
       }
     }).join('\n');
+
   return `${format(innerTree, 0)}`;
 };
 

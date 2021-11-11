@@ -1,11 +1,12 @@
 import _ from 'lodash';
 
 const buildTree = (data1, data2) => {
-  const keys = Object.keys({ ...data1, ...data2 });
-  const sortedKeys = _.sortBy(keys);
-  return sortedKeys.map((key) => {
+  const keys = _.sortedUniq(Object.keys({ ...data1, ...data2 }).sort());
+
+  return keys.map((key) => {
     const value1 = data1[key];
     const value2 = data2[key];
+
     if (!_.has(data1, key)) {
       return { type: 'add', key, val: value2 };
     }
@@ -20,6 +21,7 @@ const buildTree = (data1, data2) => {
         type: 'updated', key, val1: value1, val2: value2,
       };
     }
+
     return { type: 'same', key, val: value1 };
   });
 };

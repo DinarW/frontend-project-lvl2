@@ -8,5 +8,6 @@ export default (getDiff, format) => {
   if (format === 'json') {
     return JSON.stringify(getDiff);
   }
+
   return stylish(getDiff);
 };
