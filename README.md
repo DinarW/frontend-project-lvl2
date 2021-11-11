@@ -8,10 +8,14 @@
 Команда для запуска: `gendiff -h`:
 [![asciicast](https://asciinema.org/a/hohmtxAlYyomyl7yIwevL2djT.svg)](https://asciinema.org/a/hohmtxAlYyomyl7yIwevL2djT)
 <h3>Сравнение JSON файлов</h3>
+
 [![asciicast](https://asciinema.org/a/hSVQHKyOmK30KHMiH8JFercra.svg)](https://asciinema.org/a/hSVQHKyOmK30KHMiH8JFercra)
 <h3>Сравнение YAML файлов</h3>
+
 [![asciicast](https://asciinema.org/a/uEyaG04OTS26DvnRrh8uq9Abp.svg)](https://asciinema.org/a/uEyaG04OTS26DvnRrh8uq9Abp)
 <h3>Plain format</h3>
+
 [![asciicast](https://asciinema.org/a/u6NtiOjYbJr4ssLknySdKF8JQ.svg)](https://asciinema.org/a/u6NtiOjYbJr4ssLknySdKF8JQ)
 <h3>JSON format</h3>
+
 [![asciicast](https://asciinema.org/a/SsazZ8DJw6mssVIvDCWsgZqDo.svg)](https://asciinema.org/a/SsazZ8DJw6mssVIvDCWsgZqDo)
