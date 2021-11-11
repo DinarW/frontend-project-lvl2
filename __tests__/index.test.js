@@ -10,22 +10,29 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const getExpected = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
 test('JSON Diff', () => {
-  const file1Path = getFixturePath('file_flat1.json');
-  const file2Path = getFixturePath('file_flat2.json');
-  const expectedFile = getExpected('expected.flat.txt');
+  const file1Path = getFixturePath('file1.json');
+  const file2Path = getFixturePath('file2.json');
+  const expectedFile = getExpected('expected.stylish.txt');
   expect(genDiff(file1Path, file2Path)).toEqual(expectedFile);
 });
 
 test('YAML Diff', () => {
-  const file1Path = getFixturePath('file_flat1.yml');
-  const file2Path = getFixturePath('file_flat2.yml');
-  const expectedFile = getExpected('expected.flat.txt');
+  const file1Path = getFixturePath('file1.yml');
+  const file2Path = getFixturePath('file2.yml');
+  const expectedFile = getExpected('expected.stylish.txt');
   expect(genDiff(file1Path, file2Path)).toEqual(expectedFile);
 });
 
-test('Recursive comparison', () => {
-  const file1Path = getFixturePath('file_nested1.json');
-  const file2Path = getFixturePath('file_nested2.json');
-  const expectedFile = getExpected('expected.nested.txt');
-  expect(genDiff(file1Path, file2Path)).toEqual(expectedFile);
+test('Plain format', () => {
+  const file1Path = getFixturePath('file1.json');
+  const file2Path = getFixturePath('file2.json');
+  const expectedFile = getExpected('expected.plain.txt');
+  expect(genDiff(file1Path, file2Path, 'plain')).toEqual(expectedFile);
+});
+
+test('JSON format', () => {
+  const file1Path = getFixturePath('file1.json');
+  const file2Path = getFixturePath('file2.json');
+  const expectedFile = getExpected('expected.json.txt');
+  expect(genDiff(file1Path, file2Path, 'json')).toEqual(expectedFile);
 });
