@@ -8,7 +8,7 @@
   },
   "type": "module",
   "scripts": {
-    "test": "make test"
+    "test": "npx jest --bail"
   },
   "repository": {
     "type": "git",
