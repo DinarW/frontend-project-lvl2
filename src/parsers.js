@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import yaml from 'js-yaml';
 
 const extnames = {
@@ -8,12 +6,10 @@ const extnames = {
   '.json': JSON.parse,
 };
 
-const getFileData = (filepath) => {
-  const absolutePath = path.isAbsolute(filepath) ? filepath : path.resolve(process.cwd(), filepath);
-  const extname = extnames[path.extname(absolutePath)];
-  const file = fs.readFileSync(absolutePath, 'utf-8');
-  const fileData = extname(file);
+const parse = (data, dataType) => {
+  const extname = extnames[dataType];
+  const fileData = extname(data);
   return fileData;
 };
 
-export default getFileData;
+export default parse;
