@@ -1,6 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/DinarW/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/DinarW/frontend-project-lvl2/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0fd7e81e55eff99588f9/maintainability)](https://codeclimate.com/github/DinarW/frontend-project-lvl2/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/0fd7e81e55eff99588f9/test_coverage)](https://codeclimate.com/github/DinarW/frontend-project-lvl2/test_coverage)
 [![github-action](https://github.com/DinarW/frontend-project-lvl2/actions/workflows/github-action.yml/badge.svg)](https://github.com/DinarW/frontend-project-lvl2/actions/workflows/github-action.yml)
 
 <h2>genDiff: Сравнение файлов.</h2>
