@@ -1,41 +1,43 @@
-const currentIndent = (depth, intend = 4) => ' '.repeat(intend + depth);
-const stringify = (someEntity, spaceCount) => {
-  const iter = (current, depth) => {
-    if (typeof current !== 'object') {
-      return `${current}`;
-    }
-    if (current === null) { return null; }
-    const lines = Object
-      .entries(current)
-      .map(([key, value]) => `${currentIndent(depth + 4)}${key}: ${iter(value, depth + 4)}`);
-    return [
-      '{',
-      ...lines,
-      `${currentIndent(depth)}}`,
-    ].join('\n');
-  };
+import _ from 'lodash';
 
-  return iter(someEntity, spaceCount);
+const indent = (depth, spacesCount = 4) => ' '.repeat(depth * spacesCount - 2);
+
+const stringify = (data, depth, styleField) => {
+  if (!_.isObject(data)) {
+    return String(data);
+  }
+
+  const output = Object.entries(data)
+    .map(([key, val]) => styleField({ type: 'same', key, val }, depth + 1));
+
+  return `{\n${output.join('\n')}\n${indent(depth)}  }`;
 };
 
-const stylish = (data) => {
-  const iter = (tree, depth) => tree.map((node) => {
-    switch (node.type) {
-      case 'add':
-        return `${currentIndent(depth - 2)}+ ${node.key}: ${stringify(node.val, depth)}\n`;
-      case 'remove':
-        return `${currentIndent(depth - 2)}- ${node.key}: ${stringify(node.val, depth)}\n`;
-      case 'same':
-        return `${currentIndent(depth - 2)}  ${node.key}: ${stringify(node.val, depth)}\n`;
-      case 'updated':
-        return `${currentIndent(depth - 2)}- ${node.key}: ${stringify(node.val1, depth)}\n${currentIndent(depth - 2)}+ ${node.key}: ${stringify(node.val2, depth)}\n`;
-      case 'recursion':
-        return `${currentIndent(depth)}${node.key}: {\n${iter(node.children, depth + 4).join('')}${currentIndent(depth)}}\n`;
-      default:
-        throw new Error(`Этого типа не существует: ${node.type}`);
+const styleField = (field, depth = 0) => {
+  switch (field.type) {
+    case 'root': {
+      const output = field.children.flatMap((node) => styleField(node, depth + 1));
+      return `{\n${output.join('\n')}\n}`;
     }
-  });
-  return `{\n${iter(data, 0).join('')}}`;
+    case 'recursion': {
+      const output = field.children.flatMap((node) => styleField(node, depth + 1));
+      return `${indent(depth)}  ${field.key}: {\n${output.join('\n')}\n${indent(depth)}  }`;
+    }
+    case 'add':
+      return `${indent(depth)}+ ${field.key}: ${stringify(field.val, depth, styleField)}`;
+    case 'removed':
+      return `${indent(depth)}- ${field.key}: ${stringify(field.val, depth, styleField)}`;
+    case 'same':
+      return `${indent(depth)}  ${field.key}: ${stringify(field.val, depth, styleField)}`;
+    case 'updated': {
+      const { key, val1, val2 } = field;
+      const data1 = `${indent(depth)}- ${key}: ${stringify(val1, depth, styleField)}`;
+      const data2 = `${indent(depth)}+ ${key}: ${stringify(val2, depth, styleField)}`;
+      return `${data1}\n${data2}`;
+    }
+    default:
+      return '';
+  }
 };
 
-export default stylish;
+export default styleField;

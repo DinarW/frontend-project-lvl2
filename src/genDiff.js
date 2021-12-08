@@ -1,13 +1,14 @@
 import fs from 'fs';
 import path from 'path';
+import _ from 'lodash';
 import parse from './parsers.js';
 import format from './formatters/index.js';
 import buildTree from './buildTree.js';
 
 const getFileData = (filepath) => {
   const absolutePath = path.isAbsolute(filepath) ? filepath : path.resolve(process.cwd(), filepath);
-  const extname = path.extname(absolutePath);
   const file = fs.readFileSync(absolutePath, 'utf-8');
+  const extname = _.last(absolutePath.split('.'));
   return [file, extname];
 };
 

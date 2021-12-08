@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
-const buildTree = (data1, data2) => {
-  const keys = _.sortedUniq(_.sortBy(Object.keys({ ...data1, ...data2 })));
+const compareObject = (data1, data2) => {
+  const keys = _.sortBy(_.union(Object.keys(data1), Object.keys(data2)));
 
   return keys.map((key) => {
     const value1 = data1[key];
@@ -14,7 +14,7 @@ const buildTree = (data1, data2) => {
       return { type: 'remove', key, val: value1 };
     }
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
-      return { type: 'recursion', key, children: buildTree(value1, value2) };
+      return { type: 'recursion', key, children: compareObject(value1, value2) };
     }
     if (!_.isEqual(value1, value2)) {
       return {
@@ -25,5 +25,7 @@ const buildTree = (data1, data2) => {
     return { type: 'same', key, val: value1 };
   });
 };
+
+const buildTree = (object1, object2) => ({ type: 'root', children: compareObject(object1, object2) });
 
 export default buildTree;

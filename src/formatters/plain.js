@@ -1,35 +1,38 @@
-const stringify = (obj) => {
-  if (typeof obj === 'object' && obj !== null) {
-    return '[complex value]';
-  } if (typeof obj === 'string') {
-    return `'${obj}'`;
-  } if (obj === null) {
-    return null;
-  }
+import _ from 'lodash';
 
-  return obj;
+const stringify = (data) => {
+  if (_.isObject(data)) {
+    return '[complex value]';
+  }
+  if (_.isString(data)) {
+    return `'${data}'`;
+  }
+  return String(data);
 };
 
-const plain = (innerTree) => {
-  const format = (nodes, parent) => nodes
-    .filter((node) => node.type !== 'same')
-    .map((node) => {
-      const property = parent ? `${parent}.${node.key}` : node.key;
-      switch (node.type) {
-        case 'add':
-          return `Property '${property}' was added with value: ${stringify(node.val)}`;
-        case 'remove':
-          return `Property '${property}' was removed`;
-        case 'updated':
-          return `Property '${property}' was updated. From ${stringify(node.val1)} to ${stringify(node.val2)}`;
-        case 'recursion':
-          return `${format(node.children, property)}`;
-        default:
-          throw new Error(`Такого типа не существует ${node.type}`);
-      }
-    }).join('\n');
-
-  return `${format(innerTree, 0)}`;
+const plain = (data, pathKeys = []) => {
+  const fieldKeys = _.compact([...pathKeys, data.key]);
+  const fieldName = fieldKeys.join('.');
+  switch (data.type) {
+    case 'root': {
+      const output = _.compact(data.children.flatMap((node) => plain(node, fieldKeys)));
+      return output.join('\n');
+    }
+    case 'recursion': {
+      const output = _.compact(data.children.flatMap((node) => plain(node, fieldKeys)));
+      return output.join('\n');
+    }
+    case 'add':
+      return `Property '${fieldName}' was added with value: ${stringify(data.val)}`;
+    case 'remove':
+      return `Property '${fieldName}' was removed`;
+    case 'updated': {
+      const { val1, val2 } = data;
+      return `Property '${fieldName}' was updated. From ${stringify(val1)} to ${stringify(val2)}`;
+    }
+    default:
+      return null;
+  }
 };
 
 export default plain;
