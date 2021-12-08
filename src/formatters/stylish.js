@@ -36,7 +36,7 @@ const styleField = (field, depth = 0) => {
       return `${data1}\n${data2}`;
     }
     default:
-      return '';
+      throw new Error('Error!');
   }
 };
 

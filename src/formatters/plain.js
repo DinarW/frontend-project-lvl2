@@ -24,7 +24,7 @@ const plain = (data, pathKeys = []) => {
     }
     case 'add':
       return `Property '${fieldName}' was added with value: ${stringify(data.val)}`;
-    case 'remove':
+    case 'removed':
       return `Property '${fieldName}' was removed`;
     case 'updated': {
       const { val1, val2 } = data;

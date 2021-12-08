@@ -11,7 +11,7 @@ const compareObject = (data1, data2) => {
       return { type: 'add', key, val: value2 };
     }
     if (!_.has(data2, key)) {
-      return { type: 'remove', key, val: value1 };
+      return { type: 'removed', key, val: value1 };
     }
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
       return { type: 'recursion', key, children: compareObject(value1, value2) };
