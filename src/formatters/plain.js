@@ -11,11 +11,11 @@ const stringify = (data) => {
 };
 
 const plain = (data, pathKeys = []) => {
-  const fieldKeys = _.compact([...pathKeys, data.key]);
+  const fieldKeys = [...pathKeys, data.key];
   const fieldName = fieldKeys.join('.');
   switch (data.type) {
     case 'root': {
-      const output = _.compact(data.children.flatMap((node) => plain(node, fieldKeys)));
+      const output = _.compact(data.children.flatMap((node) => plain(node)));
       return output.join('\n');
     }
     case 'recursion': {
@@ -31,7 +31,10 @@ const plain = (data, pathKeys = []) => {
       return `Property '${fieldName}' was updated. From ${stringify(val1)} to ${stringify(val2)}`;
     }
     default:
-      return null;
+      if (data.type === 'same') {
+        return null;
+      }
+      throw new Error('Error! Unknown type!');
   }
 };
 

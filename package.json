@@ -22,7 +22,6 @@
   "homepage": "https://github.com/DinarW/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^8.3.0",
-    "jest": "^27.3.1",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21"
   },
@@ -30,6 +29,7 @@
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-jest": "^25.2.2"
+    "eslint-plugin-jest": "^25.2.2",
+    "jest": "^27.3.1"
   }
 }

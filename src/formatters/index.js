@@ -1,11 +1,10 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
-import json from './json.js';
 
 const formats = {
   stylish,
   plain,
-  json,
+  json: (field) => JSON.stringify(field.children),
 };
 
 export default (getDiff, format) => formats[format](getDiff);
