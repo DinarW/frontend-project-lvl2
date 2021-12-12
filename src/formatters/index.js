@@ -4,7 +4,7 @@ import plain from './plain.js';
 const formats = {
   stylish,
   plain,
-  json: (field) => JSON.stringify(field.children),
+  json: JSON.stringify,
 };
 
-export default (getDiff, format) => formats[format](getDiff);
+export default (diff, format) => formats[format](diff);
