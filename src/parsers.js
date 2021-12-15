@@ -1,15 +1,15 @@
 import yaml from 'js-yaml';
 
-const extnames = {
+const parsers = {
   yml: yaml.load,
   yaml: yaml.load,
   json: JSON.parse,
 };
 
-const parse = (data, dataType) => {
-  const extname = extnames[dataType];
-  const fileData = extname(data);
-  return fileData;
+const parse = (stringData, dataType) => {
+  const parser = parsers[dataType];
+  const data = parser(stringData);
+  return data;
 };
 
 export default parse;

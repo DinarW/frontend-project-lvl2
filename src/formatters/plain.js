@@ -30,10 +30,9 @@ const plain = (data, pathKeys = []) => {
       const { val1, val2 } = data;
       return `Property '${fieldName}' was updated. From ${stringify(val1)} to ${stringify(val2)}`;
     }
+    case 'same':
+      return null;
     default:
-      if (data.type === 'same') {
-        return null;
-      }
       throw new Error('Error! Unknown type!');
   }
 };
